@@ -33,16 +33,28 @@ parser.add_argument(
 args = parser.parse_args()
 
 """
-Three arguments are checked for in the input gathering step,
+Three arguments are checked for in the input gathering step using argparse,
 with the flag arguments being stored as bools.
+long_format = True if -l or --long-format is input
+filetype = True if -F or --filetype is input
 """
 
 def readFilesinDir (directory):
     """
-    Reads files from a given folder input (must be in the pwd unless entire path is given) using the os library
+    Reads files from a given folder input (must be in the pwd unless entire path is given) using the os library.
+    directory = name of directory input whose contents must be listed.
+    dir_ls = A list that will have lists containing each file's metadata appended to it.
     """
     dir_ls = []
 
+    """
+    The nested if statements check if the given directory is empty.
+    If empty, dir_path = Present working directory
+    If input is a directory or file, dir_path = the directory input itself
+    Else, dir_path = Present working directory with "directory" input appended afterwords
+    (This assumes the user has input a directory within the current working directory)
+    If no directory is found, an error message displays.
+    """
     if (directory == None):
         dir_path = os.getcwd()
     elif (os.path.isdir(directory) or os.path.isfile(directory)):
@@ -63,6 +75,16 @@ def readFilesinDir (directory):
     return dir_ls
 
 def formatData (dir_ls, long_format, filetype):
+    """
+    Formats data based on the directory list input, as well as whether the long-format or filetype flags are True.
+    The first if statement checks if filetype is True.
+    If True, the function appends the specified special characters to the filenames depending on whether it's a directory or an executable.
+    (NOTE: The executable append doesn't seem to be working because os.acces(filepath, os.X_OK) isn't registering actual executable files.
+           This still needs to be resolved.)
+
+    The second if statement checks if long_format is True.
+    If True, the function simply prints the list elements in a single line to the specified formatting.
+    """
     if (filetype):
         for i in range (len(dir_ls)):
             if (os.path.isdir(dir_ls[i][3])):
@@ -82,7 +104,13 @@ def formatData (dir_ls, long_format, filetype):
             print (dir_ls[i][2])
 
 
+"""
+These variables are used to read the input data and pass them as arguments for the functions.
+"""
 directory = readFilesinDir(args.directory_name)
 final_out = formatData (directory, args.long_format, args.filetype)
 
+"""
+Outputs the list of elements in the specified directory.
+"""
 print (final_out)
