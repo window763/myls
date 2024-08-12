@@ -2,7 +2,6 @@ import argparse
 import os
 from datetime import datetime
 
-'''
 parser = argparse.ArgumentParser(
         prog="pyls",
         description="Outputs a list of files in a given directory (or present working directory if no input given)",
@@ -21,14 +20,14 @@ parser.add_argument(
         "-l",
         "--long-format",
         help="Outputs list of files + metadata in the following format: Last Modified Date (YYYY-MM-DD HH:MM:SS), Size of Entry, Filename).",
-        action="store-true",
+        action="store_true",
         )
 
 parser.add_argument(
         "-F",
         "--filetype",
         help="Adds an extra character to the end of the printed filename that indicates whether a file is a directory (/) or an executable (*).",
-        action="store-true",
+        action="store_true",
         )
 
 args = parser.parse_args()
@@ -37,7 +36,6 @@ args = parser.parse_args()
 Three arguments are checked for in the input gathering step,
 with the flag arguments being stored as bools.
 """
-'''
 
 def readFilesinDir (directory):
     """
@@ -84,8 +82,7 @@ def formatData (dir_ls, long_format, filetype):
             print (dir_ls[i][2])
 
 
-x = readFilesinDir("/home/window763/COMP350")
+directory = readFilesinDir(args.directory_name)
+final_out = formatData (directory, args.long_format, args.filetype)
 
-print ("key")
-print (formatData (x, 1, 1))
-print (os.access("/home/window763/COMP350/lstest.exe", os.X_OK))
+print (final_out)
