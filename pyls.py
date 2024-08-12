@@ -103,14 +103,17 @@ def formatData (dir_ls, long_format, filetype):
         for i in range (len(dir_ls)):
             print (dir_ls[i][2])
 
+def main ():
+    """
+    These variables are used to read the input data and pass them as arguments for the functions.
+    """
+    directory = readFilesinDir(args.directory_name)
+    final_out = formatData (directory, args.long_format, args.filetype)
 
-"""
-These variables are used to read the input data and pass them as arguments for the functions.
-"""
-directory = readFilesinDir(args.directory_name)
-final_out = formatData (directory, args.long_format, args.filetype)
+    """
+    Outputs the list of elements in the specified directory.
+    """
+    print (final_out)
 
-"""
-Outputs the list of elements in the specified directory.
-"""
-print (final_out)
+if __name__ == "__main__":
+    main()
