@@ -56,12 +56,33 @@ def readFilesinDir (directory):
 
         metadata = os.stat(filepath)
 
-        data = [metadata.st_mtime, metadata.st_size, filename]
+        data = [metadata.st_mtime, metadata.st_size, filename, filepath]
         dir_ls.append(data)
 
     return dir_ls
 
-#Simple test to check functionality
+def formatData (dir_ls, long_format, filetype):
+    if (filetype):
+        for i in range (len(dir_ls)):
+            if (os.path.isdir(dir_ls[i][3])):
+                dir_ls[i][2] = dir_ls[i][2] + "/"
+            elif (os.access(dir_ls[i][3], os.X_OK)):
+                dir_ls[i][2] = dir_ls[i][2] + "*"
+
+    if (long_format):
+        for i in range (len(dir_ls)):
+            date = dir_ls[i][0]
+            size = dir_ls[i][1]
+            file = dir_ls[i][2]
+
+            print (date, f'{size:>10}', "\t", file)
+    else:
+        for i in range (len(dir_ls)):
+            print (dir_ls[i][2])
+
+
 x = readFilesinDir("/home/window763/COMP350")
 
-print (x)
+print ("key")
+print (formatData (x, 1, 1))
+print (os.access("/home/window763/COMP350/lstest.exe", os.X_OK))
