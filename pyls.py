@@ -1,5 +1,6 @@
 import argparse
 import os
+from datetime import datetime
 
 '''
 parser = argparse.ArgumentParser(
@@ -56,7 +57,9 @@ def readFilesinDir (directory):
 
         metadata = os.stat(filepath)
 
-        data = [metadata.st_mtime, metadata.st_size, filename, filepath]
+        date = datetime.fromtimestamp(metadata.st_mtime)
+
+        data = [date.strftime("%Y-%m-%d %H:%M:%S"), metadata.st_size, filename, filepath]
         dir_ls.append(data)
 
     return dir_ls
