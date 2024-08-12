@@ -61,6 +61,7 @@ def readFilesinDir (directory):
 
     return dir_ls
 
+#Simple test to check functionality
 x = readFilesinDir("/home/window763/COMP350")
 
 print (x)
