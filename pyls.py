@@ -1,5 +1,7 @@
 import argparse
+import os
 
+'''
 parser = argparse.ArgumentParser(
         prog="pyls",
         description="Outputs a list of files in a given directory (or present working directory if no input given)",
@@ -34,3 +36,31 @@ args = parser.parse_args()
 Three arguments are checked for in the input gathering step,
 with the flag arguments being stored as bools.
 """
+'''
+
+def readFilesinDir (directory):
+    """
+    Reads files from a given folder input (must be in the pwd unless entire path is given) using the os library
+    """
+    dir_ls = []
+
+    if (directory == None):
+        dir_path = os.getcwd()
+    elif (os.path.isdir(directory) or os.path.isfile(directory)):
+        dir_path = directory
+    else:
+        dir_path = os.getcwd() + "/" + directory
+
+    for filename in os.listdir(dir_path):
+        filepath = os.path.join(dir_path, filename)
+
+        metadata = os.stat(filepath)
+
+        data = [metadata.st_mtime, metadata.st_size, filename]
+        dir_ls.append(data)
+
+    return dir_ls
+
+x = readFilesinDir("/home/window763/COMP350")
+
+print (x)
